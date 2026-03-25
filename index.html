@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEXUS — F-14 Tomcat Digital Twin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Roboto+Condensed:wght@300;400;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/instruments.css">
+  <link rel="stylesheet" href="css/panels.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✈</text></svg>">
+</head>
+<body>
+  <!-- Loading screen -->
+  <div id="loadingScreen">
+    <div class="ls-content">
+      <div class="ls-typewriter">INITIALIZING F-14 TOMCAT DIGITAL TWIN</div>
+      <div class="ls-sub">Naval Aviation Heritage System — © Grumman 1970</div>
+      <div class="ls-bar"><div class="ls-fill"></div></div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header id="mainHeader">
+    <div class="header-brand">
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+        <polygon points="14,2 20,12 14,10 8,12" fill="#fbbf24"/>
+        <polygon points="14,10 20,12 14,26 8,12" fill="#f59e0b"/>
+        <rect x="12" y="4" width="4" height="16" fill="#92400e"/>
+      </svg>
+      <div>
+        <div class="brand-designation">GRUMMAN</div>
+        <div class="brand-name">F-14 TOMCAT</div>
+      </div>
+    </div>
+    <nav class="header-tabs">
+      <button class="tab-btn active" data-tab="3dview">3D VIEW</button>
+      <button class="tab-btn" data-tab="systems">SYSTEMS</button>
+      <button class="tab-btn" data-tab="weapons">WEAPONS</button>
+      <button class="tab-btn" data-tab="history">HISTORY</button>
+      <button class="tab-btn" data-tab="simulation">FLIGHT SIM</button>
+      <button class="tab-btn" data-tab="manual">MANUAL</button>
+    </nav>
+    <div class="header-right">
+      <div class="config-badge">TOMCAT DIGITAL TWIN</div>
+      <div class="mode-indicator" id="modeLight"></div>
+    </div>
+  </header>
+
+  <!-- ── 3D VIEW TAB ───────────────────────────────────────── -->
+  <div id="tab-3dview" class="tab-content active">
+    <div class="view-layout">
+      <div class="view-sidebar">
+        <div class="sidebar-section">
+          <div class="ss-title">VIEWPOINT</div>
+          <div class="btn-group-v">
+            <button class="ctrl-btn active" data-view="external">👁 EXTERNAL</button>
+            <button class="ctrl-btn" data-view="cockpit-front">🎮 PILOT COCKPIT</button>
+            <button class="ctrl-btn" data-view="cockpit-rio">👨‍💻 RIO STATION</button>
+            <button class="ctrl-btn" data-view="carrier">🚢 CARRIER DECK</button>
+            <button class="ctrl-btn" data-view="night">🌙 NIGHT CVW</button>
+          </div>
+        </div>
+        <div class="sidebar-section">
+          <div class="ss-title">HOTSPOT LEGEND</div>
+          <div class="hotspot-legend">
+            <div class="hl-item"><span class="hl-dot" style="background:#fbbf24"></span>Radome (AN/AWG-9)</div>
+            <div class="hl-item"><span class="hl-dot" style="background:#4ade80"></span>Variable Wing</div>
+            <div class="hl-item"><span class="hl-dot" style="background:#ef4444"></span>J79 Engine</div>
+            <div class="hl-item"><span class="hl-dot" style="background:#60a5fa"></span>Phoenix Launcher</div>
+            <div class="hl-item"><span class="hl-dot" style="background:#a78bfa"></span>Stabilators</div>
+          </div>
+        </div>
+        <div class="sidebar-section">
+          <div class="ss-title">DIMENSIONS</div>
+          <div class="dim-list">
+            <div class="dl-item"><span class="dl-label">Length</span><span class="dl-value">62.8 ft</span></div>
+            <div class="dl-item"><span class="dl-label">Height</span><span class="dl-value">16.0 ft</span></div>
+            <div class="dl-item"><span class="dl-label">Wingspan</span><span class="dl-value">64 ft (spread)</span></div>
+            <div class="dl-item"><span class="dl-label">Swept</span><span class="dl-value">38 ft</span></div>
+            <div class="dl-item"><span class="dl-label">Wing Area</span><span class="dl-value">565 ft²</span></div>
+            <div class="dl-item"><span class="dl-label">Empty Weight</span><span class="dl-value">39,900 lb</span></div>
+            <div class="dl-item"><span class="dl-label">Max TOGW</span><span class="dl-value">74,350 lb</span></div>
+            <div class="dl-item"><span class="dl-label">Engines</span><span class="dl-value">2× J79-GE-400A</span></div>
+            <div class="dl-item"><span class="dl-label">Dry Thrust</span><span class="dl-value">15,600 lbf ea.</span></div>
+            <div class="dl-item"><span class="dl-label">AB Thrust</span><span class="dl-value">23,500 lbf ea.</span></div>
+            <div class="dl-item"><span class="dl-label">Max Speed</span><span class="dl-value">Mach 2.34</span></div>
+            <div class="dl-item"><span class="dl-label">Ceiling</span><span class="dl-value">60,000 ft</span></div>
+            <div class="dl-item"><span class="dl-label">Crew</span><span class="dl-value">Pilot + RIO</span></div>
+          </div>
+        </div>
+        <div class="sidebar-section">
+          <div class="ss-title">3D CONTROLS</div>
+          <p style="font-size:11px;color:var(--text3);line-height:1.5;margin:0">
+            <strong>Drag</strong> to orbit<br>
+            <strong>Scroll</strong> to zoom<br>
+            <strong>Click</strong> hotspots for info
+          </p>
+        </div>
+      </div>
+
+      <div class="view-main">
+        <div id="canvas3d" class="canvas-3d"></div>
+        <div id="hotspot-label" class="hotspot-label hidden"></div>
+        <div id="infoPanel" class="info-panel hidden">
+          <div id="infoPanelContent"></div>
+        </div>
+      </div>
+
+      <div class="view-panel-right">
+        <div class="rp-title">SELECTED COMPONENT</div>
+        <div id="componentInfo" class="component-info">
+          <p style="color:var(--text3);font-size:12px;margin:0">Click any highlighted component on the 3D model for detailed specifications.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SYSTEMS TAB ──────────────────────────────────────── -->
+  <div id="tab-systems" class="tab-content">
+    <div class="sys-layout">
+      <div class="sys-tabs-sidebar">
+        <button class="sys-tab-btn active" data-sys="dimensions">📐 Dimensions & Weights</button>
+        <button class="sys-tab-btn" data-sys="engines">🔥 Engines (J79)</button>
+        <button class="sys-tab-btn" data-sys="avionics">📡 Avionics & Radar</button>
+        <button class="sys-tab-btn" data-sys="fuel">⛽ Fuel System</button>
+        <button class="sys-tab-btn" data-sys="hydraulics">⚙ Hydraulic System</button>
+        <button class="sys-tab-btn" data-sys="structural">🧱 Structure</button>
+      </div>
+      <div class="sys-content-area">
+        <div id="systemsContent" class="sys-content"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── WEAPONS TAB ─────────────────────────────────────── -->
+  <div id="tab-weapons" class="tab-content">
+    <div class="wp-layout">
+      <div class="wp-weapon-selector">
+        <div class="wp-title-bar">WEAPON SYSTEMS</div>
+        <button class="wp-btn active" data-weap="phoenix">🚀 AIM-54 Phoenix</button>
+        <button class="wp-btn" data-weap="sidewinder">🔥 AIM-9 Sidewinder</button>
+        <button class="wp-btn" data-weap="sparrow">🎯 AIM-7 Sparrow</button>
+        <button class="wp-btn" data-weap="vulcan">💥 M61A1 Vulcan</button>
+        <button class="wp-btn" data-weap="loadout">📋 Loadout Configs</button>
+      </div>
+      <div class="wp-display-area">
+        <div id="weaponDisplay" class="weapon-display"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── HISTORY TAB ─────────────────────────────────────── -->
+  <div id="tab-history" class="tab-content">
+    <div class="hist-layout">
+      <div class="hist-timeline" id="historyTimeline"></div>
+      <div class="hist-detail">
+        <div class="hd-header">
+          <div class="hd-year" id="hdSubtitle"></div>
+          <div class="hd-title" id="hdTitle"></div>
+        </div>
+        <div class="hd-body" id="hdContent"></div>
+        <div class="survivors-section">
+          <div class="ss-title" style="padding:0 0 12px 0;border-bottom:1px solid var(--border);margin-bottom:12px"> surviving examples</div>
+          <div id="survivorList" class="survivor-grid"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SIMULATION TAB ─────────────────────────────────── -->
+  <div id="tab-simulation" class="tab-content">
+    <div class="sim-layout">
+      <!-- Left: instruments + 3D canvas -->
+      <div class="sim-left">
+        <canvas id="simCanvas" class="sim-canvas"></canvas>
+        <canvas id="gaugeCanvas" class="gauge-canvas"></canvas>
+        <div class="sim-3d-mini">
+          <div id="canvas3dMini" style="width:100%;height:200px"></div>
+        </div>
+      </div>
+
+      <!-- Center: flight data -->
+      <div class="sim-center">
+        <div class="fd-panel">
+          <div class="fd-row">
+            <div class="fd-cell"><div class="fdc-label">SPEED</div><div class="fdc-value" id="dispSpeed">300</div><div class="fdc-unit">KTAS</div></div>
+            <div class="fd-cell"><div class="fdc-label">MACH</div><div class="fdc-value" id="dispMach">0.50</div></div>
+            <div class="fd-cell"><div class="fdc-label">ALT</div><div class="fdc-value" id="dispAlt">10000</div><div class="fdc-unit">FT MSL</div></div>
+            <div class="fd-cell"><div class="fdc-label">ROC</div><div class="fdc-value" id="dispROC">0</div><div class="fdc-unit">FT/MIN</div></div>
+          </div>
+          <div class="fd-row">
+            <div class="fd-cell"><div class="fdc-label">HDG</div><div class="fdc-value" id="dispHdg">000</div><div class="fdc-unit">DEG</div></div>
+            <div class="fd-cell"><div class="fdc-label">PITCH</div><div class="fdc-value" id="dispPitch">0.0</div><div class="fdc-unit">DEG</div></div>
+            <div class="fd-cell"><div class="fdc-label">G</div><div class="fdc-value" id="dispG">1.0</div></div>
+            <div class="fd-cell"><div class="fdc-label">AOA</div><div class="fdc-value" id="dispAoA">5.0</div><div class="fdc-unit">DEG</div></div>
+          </div>
+          <div class="fd-row">
+            <div class="fd-cell"><div class="fdc-label">THRUST</div><div class="fdc-value" id="dispThrust">0</div><div class="fdc-unit">K LBF</div></div>
+            <div class="fd-cell"><div class="fdc-label">DRAG</div><div class="fdc-value" id="dispDrag">0</div><div class="fdc-unit">K LBF</div></div>
+            <div class="fd-cell"><div class="fdc-label">L/D</div><div class="fdc-value" id="dispLD">0.0</div></div>
+            <div class="fd-cell"><div class="fdc-label">STALL</div><div class="fdc-value" id="dispStall">CLEAR</div></div>
+          </div>
+        </div>
+
+        <!-- Fuel -->
+        <div class="sim-subpanel">
+          <div class="sp-title">FUEL MANAGEMENT</div>
+          <div class="fuel-display">
+            <div class="fd-bar-wrap"><div class="fd-bar" id="fuelBar" style="width:100%"></div></div>
+            <div class="fd-numbers"><span id="dispFuel">36.5</span> K LB &nbsp;|&nbsp; <span id="dispFuelGal">3,649</span> GAL</div>
+          </div>
+          <div class="tank-grid" id="tankGrid"></div>
+        </div>
+
+        <!-- Engine instruments -->
+        <div class="sim-subpanel">
+          <div class="sp-title">ENGINE (N1 / EGT)</div>
+          <div class="eng-panel">
+            <div class="eng-cell">
+              <div class="e-label">RPM</div><div class="e-value" id="dispRPM">80</div><div class="e-unit">%</div>
+            </div>
+            <div class="eng-cell">
+              <div class="e-label">EGT</div><div class="e-value" id="dispEGT">800</div><div class="e-unit">°F</div>
+            </div>
+            <div class="eng-cell">
+              <div class="e-label">FF</div><div class="e-value" id="dispFF">0</div><div class="e-unit">K LB/HR</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: controls -->
+      <div class="sim-right">
+        <div class="ctrl-panel">
+          <div class="ctrl-title">FLIGHT CONTROLS</div>
+
+          <div class="ctrl-row">
+            <label>THROTTLE</label>
+            <input type="range" id="throttleSlider" min="0" max="100" value="60" class="sim-slider">
+            <div class="ctrl-val" id="throttleVal">60%</div>
+          </div>
+
+          <div class="ctrl-row">
+            <label>WING SWEEP</label>
+            <input type="range" id="sweepSlider" min="20" max="68" value="28" class="sim-slider">
+            <div class="ctrl-val" id="sweepVal">28°</div>
+          </div>
+
+          <div class="sweep-presets">
+            <button class="sp-btn" data-sweep="20">20° CAT</button>
+            <button class="sp-btn" data-sweep="28">28° CRUISE</button>
+            <button class="sp-btn" data-sweep="50">50° SWEEP</button>
+            <button class="sp-btn" data-sweep="68">68° MAX</button>
+          </div>
+
+          <div class="ctrl-toggles">
+            <div class="toggle-row">
+              <span>🛃 AFTERBURNER</span>
+              <span class="toggle-val" id="dispAB">OFF</span>
+            </div>
+            <div class="toggle-row">
+              <span>⚙ LANDING GEAR</span>
+              <span class="toggle-val" id="dispGear">DOWN</span>
+            </div>
+            <div class="toggle-row">
+              <span>📐 FLAPS</span>
+              <span class="toggle-val" id="dispFlaps">0°</span>
+            </div>
+          </div>
+
+          <div class="sim-buttons">
+            <button class="sim-btn primary" id="btnStart">▶ START</button>
+            <button class="sim-btn danger hidden" id="btnStop">⬛ STOP</button>
+            <button class="sim-btn" id="btnReset">↺ RESET</button>
+          </div>
+
+          <div class="kb-hints">
+            <div class="kh-title">KEYBOARD</div>
+            <div class="kh-row"><span>↑↓</span> Throttle</div>
+            <div class="kh-row"><span>W</span> Afterburner</div>
+            <div class="kh-row"><span>G</span> Gear</div>
+            <div class="kh-row"><span>F</span> Flaps</div>
+            <div class="kh-row"><span>B</span> Airbrake</div>
+            <div class="kh-row"><span>R/ESC</span> Stop</div>
+          </div>
+        </div>
+
+        <!-- Wing sweep performance -->
+        <div class="ctrl-panel">
+          <div class="ctrl-title">SWEEP PERFORMANCE</div>
+          <div class="sp-grid">
+            <div class="spg-item"><div class="spgl">MAX MACH</div><div class="spgv" id="spMaxMach">0.95</div></div>
+            <div class="spg-item"><div class="spgl">TURN RATE</div><div class="spgv" id="spTurnRate">12°/s</div></div>
+            <div class="spg-item"><div class="spgl">CL</div><div class="spgv" id="spLift">1.00</div></div>
+            <div class="spg-item"><div class="spgl">CD</div><div class="spgv" id="spDrag">0.090</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── MANUAL TAB ─────────────────────────────────────── -->
+  <div id="tab-manual" class="tab-content">
+    <div class="manual-layout">
+      <div class="manual-toc" id="manualTOC"></div>
+      <div class="manual-content" id="manualContent"></div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer id="mainFooter">
+    <div class="footer-left">
+      <span>GRUMMAN F-14 TOMCAT</span>
+      <span class="sep">|</span>
+      <span>VFW F-4F / F-14A SIMULATION AUTHORITY</span>
+      <span class="sep">|</span>
+      <span>ALL DATA REFERENCE Grumman NTOs</span>
+    </div>
+    <div class="footer-right">
+      <span id="utcClock">UTC: --:--:--</span>
+      <span class="sep">|</span>
+      <span>Tomcat Digital Twin v1.0</span>
+    </div>
+  </footer>
+
+  <!-- Three.js IIFE bundle (sets window.THREE, works on file://) -->
+  <script src="js/lib/three-iife.js"></script>
+  <!-- Data files -->
+  <script src="js/data/flight.js"></script>
+  <script src="js/data/airframe.js"></script>
+  <script src="js/data/engines.js"></script>
+  <script src="js/data/avionics.js"></script>
+  <script src="js/data/weapons.js"></script>
+  <script src="js/data/history.js"></script>
+  <!-- Core engines -->
+  <script src="js/core/sim.js"></script>
+  <script src="js/core/audio.js"></script>
+  <!-- Renderers -->
+  <script src="js/render/diagram.js"></script>
+  <script src="js/render/viewer3d.js"></script>
+  <!-- UI -->
+  <script src="js/ui/instruments.js"></script>
+  <script src="js/ui/panels.js"></script>
+  <script src="js/ui/manual.js"></script>
+  <script src="js/ui/search.js"></script>
+  <!-- Main -->
+  <script src="js/main.js"></script>
+
+  <script>
+    // UTC clock
+    function updateClock() {
+      const el = document.getElementById('utcClock');
+      if (el) {
+        const now = new Date();
+        el.textContent = 'UTC: ' + now.toISOString().substr(11, 8);
+      }
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+  </script>
+</body>
+</html>
+

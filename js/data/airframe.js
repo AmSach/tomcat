@@ -1,0 +1,166 @@
+// js/data/airframe.js — F-14 Tomcat Airframe Technical Database
+
+window.F14_AIRFRAME = {
+  identification: {
+    designation: "Grumman F-14A Tomcat",
+    natoCodename: "Tomcat",
+    manufacturer: "Grumman Aerospace Corporation",
+    firstFlight: "1970-12-21",
+    enteredService: "1974-10-01",
+    retirement: "2006-09-22 (US Navy), 2014-09 (Iran AF)",
+    totalBuilt: 712,
+    unitCost: "$38 million (FY1998)",
+    variants: ["F-14A", "F-14B", "F-14D", "F-14A+ (AF)", "F-14 (Iran)"],
+  },
+
+  generalDimensions: {
+    length: { value: 62.8, unit: "ft", meter: 19.1 },
+    height: { value: 16.0, unit: "ft", meter: 4.88 },
+    wingspanSpread: { value: 64.0, unit: "ft", meter: 19.5 },
+    wingspanSwept: { value: 38.0, unit: "ft", meter: 11.6 },
+    wingArea: { value: 565, unit: "sq ft", sqMeter: 52.5 },
+    wingSweepRange: { min: 20, max: 68, unit: "deg" },
+    wingThicknessRatio: "8% at root, 3% at tip",
+    wingAspectRatio: "7.3 (spread)",
+    wingCamber: "0.3 mean camber line",
+    wingThicknessChord: "0.08 root / 0.03 tip",
+    aspectRatioSwept: "~3.2",
+    fuselageLength: { value: 62.8, unit: "ft" },
+    fuselageDiameter: { value: 5.9, unit: "ft" }, // max cross section
+    radomeLength: { value: 9.0, unit: "ft" },
+    tailSpan: { value: 33.25, unit: "ft" },
+  },
+
+  weight: {
+    empty: { value: 39900, unit: "lb", kg: 18100 },
+    normalTakeoff: { value: 61000, unit: "lb", kg: 27700 },
+    maxTakeoff: { value: 74350, unit: "lb", kg: 33725 },
+    maxLanding: { value: 52000, unit: "lb", kg: 23587 },
+    fuelMax: { value: 36600, unit: "lb", liter: 16330 },
+    armamentMax: { value: 14500, unit: "lb", kg: 6580 },
+    wingLoadNormal: { value: 108, unit: "lb/sq ft", kgSqM: 527 },
+  },
+
+  structure: {
+    fuselage: {
+      type: "Semi-monocoque aluminum alloy",
+      material: "Al 2024-T3, Al 7075-T6, Al 2014-T6",
+      frames: "Z-section bulkheads at 16 stations",
+      longerons: "6 continuous channels",
+      skinThickness: "0.020\" to 0.063\" (varying by zone)",
+      noseSection: "AN/AWG-9 radome, borosilicate glass fiber",
+      forwardFuselage: "Pilot/RIO cockpit, avionics bays",
+      centerFuselage: "weapons bay, fuel tank #1, wing pivot fairings",
+      rearFuselage: "engine pylons, tail cone",
+    },
+    wing: {
+      type: "Variable-sweep, pivoting at 25% chord",
+      planform: "Trapezoidal with crescent chord distribution",
+      pivotLocation: "25% chord from wing leading edge root",
+      material: "Al 2024-T3 / Al 7075-T6",
+      ribs: "Z-section, 5 per wing (20°, 35°, 50°, 68° stations)",
+      spars: "2-spar (front at 15%, rear at 60% chord)",
+      wingBox: "0.020\" to 0.040\" skin",
+      glove: "Fixed root chord extension, carries lead edge slats",
+      slats: "Krueger-type, automatically deployed below 30° AOA",
+      flaps: "Single-slotted, 0° to 35° deflection",
+      flaperons: "Droop function below 20° sweep, assist takeoff/landing",
+    },
+    tail: {
+      vertical: "Twin all-moving stabilators (TAS)",
+      horizontal: "N/A — no horizontal stabilizer",
+      stabilizerSpan: { value: 33.25, unit: "ft" },
+      stabilizerArea: { value: 64.0, unit: "sq ft" },
+      stabilizerMaterial: "Al 7075-T6",
+      rudders: "N/A — all-moving stabilators provide directional control",
+      antiskid: "Yes, on all landing gear wheels",
+    },
+    landingGear: {
+      nose: {
+        tires: "28×7.75-10, 24-ply rating",
+        wheelCount: 2,
+        strut: "Single-cylinder, oleopneumatic",
+        steeriAngle: "±8°",
+      },
+      main: {
+        tires: "34×10.75-14, 26-ply rating",
+        wheelCount: 2,
+        strut: "Single cylinder, 3-position (off, struts, full",
+        oleoPressure: "350 psi",
+      },
+      catapult: {
+        noseGear: "Bar lock for catapult launch",
+        launchBar: "22 in extendable",
+      },
+    },
+    fuelSystem: {
+      tanks: [
+        { id: 1, name: "#1 Tank (forward fuselage)", capacityGal: 640, location: "Forward fuselage, pilot floor" },
+        { id: 2, name: "#2 Tank (intermediate)", capacityGal: 570, location: "Below cockpit floor" },
+        { id: 3, name: "#3 Tank (aft fuselage)", capacityGal: 630, location: "Below wing pivot area" },
+        { id: 4, name: "#4 Tank (main wing)", capacityGal: 490, location: "Left main wing, inboard" },
+        { id: 5, name: "#5 Tank (main wing)", capacityGal: 490, location: "Right main wing, inboard" },
+        { id: 6, name: "#6 Tank (auxiliary)", capacityGal: 255, location: "Left wing, outboard" },
+        { id: 7, name: "#7 Tank (auxiliary)", capacityGal: 255, location: "Right wing, outboard" },
+        { id: "CT", name: "Conformal Tanks (2)", capacityGal: 870, location: "Fuselage sides, conformal" },
+      ],
+      totalInternal: { gal: 3685, liter: 13947, lb: 22110 },
+      fuelTypes: ["JP-4", "JP-5", "JP-8", "Jet A", "Jet A-1"],
+      defuelingRate: "600 gal/min via pressure refueling",
+      refuelingRate: "400 gal/min pressure / 1200 gal/min overwing",
+    },
+    hydraulics: {
+      system1: { pressure: "3000 psi", fluid: "MIL-H-5606", volume: "6 gal", purpose: "Primary flight controls" },
+      system2: { pressure: "3000 psi", fluid: "MIL-H-5606", volume: "6 gal", purpose: "Primary flight controls (backup)" },
+      system3: { pressure: "3000 psi", fluid: "MIL-H-5606", volume: "6 gal", purpose: "Landing gear, brakes, auxiliaries" },
+      reserve: { pressure: "1000 psi", fluid: "MIL-H-5606", volume: "1 gal", purpose: "Emergency extension" },
+      actuators: "6 primary flight control actuators, 4 engine actuators",
+      pumps: "2 engine-driven pumps (14.5 gpm each), 1 electric ACMP (5 gpm)",
+    },
+    electrical: {
+      generators: "2× 40 kVA variable-frequency generators (engine-driven)",
+      emergency: "28V DC battery, 30 kVA APU generator",
+      transformerRectifiers: "2× 200A TR units",
+      primaryBus: "115V AC 3-phase 400 Hz",
+      secondaryBus: "28V DC",
+      backupSystems: "Standby attitude indicator, emergency lighting",
+    },
+    environmental: {
+      system: "Bootstrap air cycle ECS",
+      cooling: "7.5 tons (refrigeration ton) vapor cycle",
+      bleedAirSource: "Engine 9th and 12th stage compressor",
+      cockpitTemp: "Regulated to 59-77°F",
+      avionicsTemp: "Maintained 50-120°F",
+      pressurization: "Bleed air, 4.5 psi differential",
+    },
+    cockpit: {
+      pilotSeat: "ACES IV zero-zero ejection seat",
+      rioSeat: "Sled-type with limited clearance",
+      canopyMaterial: "Tinted acrylic, 0.75\" thick",
+      canopyOperation: "Hydraulic actuators, 5 sec open/close",
+      headUpDisplay: "A-4J HUD (F-14A), later AN/ASG-32 IDA",
+      instrumentPanel: "Conventional + digital displays",
+      sideConsoles: "Throttle, weapons controls, misc",
+    },
+  },
+
+  // SVG diagram data for structural views
+  threeView: {
+    topScale: 64, // feet across wings
+    sideScale: 62.8, // feet long
+    frontScale: 16, // feet tall
+    stations: [
+      { pos: 0, label: "Nose tip (Radome)" },
+      { pos: 9, label: "AN/AWG-9 antenna" },
+      { pos: 18, label: "Cockpit — Pilot" },
+      { pos: 24, label: "Cockpit — RIO" },
+      { pos: 30, label: "Canopy aft" },
+      { pos: 38, label: "Wing glove leading edge" },
+      { pos: 42, label: "Wing pivot" },
+      { pos: 50, label: "Weapons bay" },
+      { pos: 54, label: "Engine nacelles" },
+      { pos: 58, label: "Tail pivot" },
+      { pos: 62.8, label: "Tail cone" },
+    ],
+  },
+};
