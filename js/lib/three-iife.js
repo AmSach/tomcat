@@ -1,4 +1,4 @@
-var THREE = (() => {
+﻿var THREE = (() => {
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
   var __getOwnPropNames = Object.getOwnPropertyNames;
@@ -21183,7 +21183,7 @@ var THREE = (() => {
       const t = (1 + Math.sqrt(5)) / 2;
       const r = 1 / t;
       const vertices = [
-        // (±1, ±1, ±1)
+        // (Â±1, Â±1, Â±1)
         -1,
         -1,
         -1,
@@ -21208,7 +21208,7 @@ var THREE = (() => {
         1,
         1,
         1,
-        // (0, ±1/φ, ±φ)
+        // (0, Â±1/Ï†, Â±Ï†)
         0,
         -r,
         -t,
@@ -21221,7 +21221,7 @@ var THREE = (() => {
         0,
         r,
         t,
-        // (±1/φ, ±φ, 0)
+        // (Â±1/Ï†, Â±Ï†, 0)
         -r,
         -t,
         0,
@@ -21234,7 +21234,7 @@ var THREE = (() => {
         r,
         t,
         0,
-        // (±φ, 0, ±1/φ)
+        // (Â±Ï†, 0, Â±1/Ï†)
         -t,
         0,
         -r,
@@ -29832,3 +29832,4 @@ var THREE = (() => {
  * Copyright 2010-2023 Three.js Authors
  * SPDX-License-Identifier: MIT
  */
+;window.THREE = THREE;

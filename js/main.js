@@ -6,12 +6,23 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Loading screen — dismiss after init
   const loadingScreen = document.getElementById('loadingScreen');
 
-  if (document.getElementById('canvas3d')) {
-    window.F14Viewer3D.init('canvas3d');
-    window.F14Viewer3D.setViewMode('external');
+  console.log('Initializing F-14 Tomcat Digital Twin...');
+  
+  try {
+    if (document.getElementById('canvas3d')) {
+      console.log('Initializing 3D viewer...');
+      window.F14Viewer3D.init('canvas3d');
+      window.F14Viewer3D.setViewMode('external');
+    }
+    console.log('Initializing instruments...');
+    window.F14Instruments.init();
+    console.log('Initializing manual...');
+    window.F14Manual.init();
+    
+    console.log('All subsystems initialized successfully');
+  } catch (error) {
+    console.error('Initialization failed:', error);
   }
-  window.F14Instruments.init();
-  window.F14Manual.init();
 
   // Dismiss loading screen
   if (loadingScreen) {
@@ -22,7 +33,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // ── Tab navigation ─────────────────────────────────────
   document.querySelectorAll('.tab-btn').forEach(btn => {
+    console.log('Adding click listener to tab button:', btn.dataset.tab);
     btn.addEventListener('click', () => {
+      console.log('Tab clicked:', btn.dataset.tab);
       const tab = btn.dataset.tab;
       document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -63,6 +76,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // ── Simulation controls ───────────────────────────────
   document.getElementById('btnStart')?.addEventListener('click', () => {
+    console.log('Start button clicked');
     window.F14Sim.start();
     window.F14Audio.start();
     const btnStop = document.getElementById('btnStop');
@@ -72,7 +86,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
 
   document.getElementById('btnStop')?.addEventListener('click', () => {
+    console.log('Stop button clicked');
     window.F14Sim.stop();
+    const btnStart = document.getElementById('btnStart');
+    const btnStop = document.getElementById('btnStop');
     if (btnStart) btnStart.style.display = '';
     if (btnStop) btnStop.classList.add('hidden');
   });
@@ -150,6 +167,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // ── Sim update loop ────────────────────────────────────
   window.F14Sim.onUpdate = state => {
+    console.log('Sim update:', state.speed, 'knots');
     renderSimState(state);
     window.F14Audio.update(state);
     window.F14Instruments.update(state);

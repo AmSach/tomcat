@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Minimal Test</title>
+  <style>
+    body { margin: 0; font-family: Arial, sans-serif; }
+    #test-div { width: 100px; height: 100px; background: red; }
+  </style>
+</head>
+<body>
+  <div id="test-div"></div>
+  <p>If you see a red square, CSS is working.</p>
+  
+  <!-- Load the essential scripts -->
+  <script src="js/lib/three-iife.js"></script>
+  <script>
+    console.log('Three.js loaded:', typeof window.THREE);
+    if (window.THREE) {
+      document.body.innerHTML += '<p>Three.js is available</p>';
+    } else {
+      document.body.innerHTML += '<p>Three.js failed to load</p>';
+    }
+  </script>
+</body>
+</html>

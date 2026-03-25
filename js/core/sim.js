@@ -347,5 +347,5 @@ window.F14Sim = (function() {
   function getSweepPerf() { return sweepPerformance(state.wingSweep); }
   function getFuelTanks() { return fuelTanks(); }
 
-  return { getState, setState, reset, start, stop, getSweepPerf, getFuelTanks };
+  return { getState, setState, reset, start, stop, getSweepPerf, getFuelTanks, onUpdate: null };
 })();
